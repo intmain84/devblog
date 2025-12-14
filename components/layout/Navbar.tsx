@@ -1,6 +1,9 @@
 import { MdNoteAlt } from "react-icons/md";
 import Container from "./Container";
 import ThemeToggle from "./ThemeToggle";
+import SearchInput from "./SearchInput";
+import Notifications from "./Notifications";
+import UserButton from "./UserButton";
 
 const Navbar = () => {
   return (
@@ -11,11 +14,11 @@ const Navbar = () => {
             <MdNoteAlt size={24} />
             <div className="font-bold text-xl">WEBDEV.blog</div>
           </div>
-          <div>Search</div>
+          <SearchInput />
           <div className="flex gap-5 md:gap-8 items-center">
             <ThemeToggle />
-            <div>Notifications</div>
-            <div>UserMenu</div>
+            <Notifications />
+            <UserButton />
           </div>
         </div>
       </Container>
