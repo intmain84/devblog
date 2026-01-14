@@ -23,9 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        suppressHydrationWarning
         className={cn(
           "antialiased flex flex-col min-h-screen px-2",
           poppins.variable
