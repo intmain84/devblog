@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { RegisterSchemaType } from "@/schemas/RegisterSchema";
 import {
   UseFormRegister,
   FieldErrors,
@@ -8,14 +7,14 @@ import {
 } from "react-hook-form";
 
 interface FormFieldProps<T extends FieldValues> {
-  id: string;
+  id: Path<T>;
   type?: string;
   label?: string;
   disabled?: boolean;
   placeholder: string;
   inputClassNames?: string;
   register: UseFormRegister<T>;
-  errors: FieldErrors;
+  errors: FieldErrors<T>;
 }
 
 const FormField = <T extends FieldValues>({
@@ -38,7 +37,7 @@ const FormField = <T extends FieldValues>({
         type={type}
         disabled={disabled}
         placeholder={placeholder}
-        {...register(id as Path<T>)}
+        {...register(id)}
         className={cn(
           "w-full p-3 my-2 outline-none rounded-md disabled:opacity-75 disabled:cursor-not-allowed border border-slate-300 dark:border-slate-700",
           errors[id] && "border-rose-400",

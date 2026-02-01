@@ -14,7 +14,7 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(LoginSchema) });
+  } = useForm<LoginSchemaType>({ resolver: zodResolver(LoginSchema) });
 
   const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
     console.log("data>>>>:", data);
@@ -27,14 +27,14 @@ const LoginForm = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col max-w-[500px] m-auto mt-8 gap-4"
       >
-        <FormField
+        <FormField<LoginSchemaType>
           label="Email"
           id="email"
           placeholder="Email"
           register={register}
           errors={errors}
         />
-        <FormField
+        <FormField<LoginSchemaType>
           label="Password"
           id="password"
           placeholder="Password"

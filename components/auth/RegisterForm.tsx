@@ -14,7 +14,7 @@ const RegisterForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(RegisterSchema) });
+  } = useForm<RegisterSchemaType>({ resolver: zodResolver(RegisterSchema) });
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = (data) => {
     console.log("data>>>>:", data);
@@ -26,21 +26,21 @@ const RegisterForm = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col max-w-[500px] m-auto mt-8 gap-4"
       >
-        <FormField
+        <FormField<RegisterSchemaType>
           label="Name"
           id="name"
           placeholder="Name"
           register={register}
           errors={errors}
         />
-        <FormField
+        <FormField<RegisterSchemaType>
           label="Email"
           id="email"
           placeholder="Email"
           register={register}
           errors={errors}
         />
-        <FormField
+        <FormField<RegisterSchemaType>
           label="Password"
           id="password"
           type="password"
@@ -48,7 +48,7 @@ const RegisterForm = () => {
           register={register}
           errors={errors}
         />
-        <FormField
+        <FormField<RegisterSchemaType>
           label="Confirm password"
           id="confirmPassword"
           type="password"
