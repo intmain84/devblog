@@ -8,6 +8,7 @@ import Button from "../common/Button";
 import SocialAuth from "./SocialAuth";
 import { FiArrowRight } from "react-icons/fi";
 import { RegisterSchema, RegisterSchemaType } from "@/schemas/RegisterSchema";
+import { signUp } from "@/app/actions/auth/register";
 
 const RegisterForm = () => {
   const {
@@ -16,8 +17,8 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm<RegisterSchemaType>({ resolver: zodResolver(RegisterSchema) });
 
-  const onSubmit: SubmitHandler<RegisterSchemaType> = (data) => {
-    console.log("data>>>>:", data);
+  const onSubmit: SubmitHandler<RegisterSchemaType> = (values) => {
+    signUp(values);
   };
   return (
     <>
