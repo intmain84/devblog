@@ -9,8 +9,12 @@ import SocialAuth from "./SocialAuth";
 import { FiArrowRight } from "react-icons/fi";
 import { RegisterSchema, RegisterSchemaType } from "@/schemas/RegisterSchema";
 import { signUp } from "@/app/actions/auth/register";
+import { useState, useTransition } from "react";
 
 const RegisterForm = () => {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>(undefined);
+  const [success, setSuccess] = useState<string | undefined>(undefined);
   const {
     register,
     handleSubmit,
@@ -18,7 +22,16 @@ const RegisterForm = () => {
   } = useForm<RegisterSchemaType>({ resolver: zodResolver(RegisterSchema) });
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = (values) => {
-    signUp(values);
+    setError(undefined);
+    setSuccess(undefined);
+    startTransition(async () => {
+      const result = await signUp(values);
+      if (result.error) {
+        setError(result.error);
+      } else {
+        setSuccess(result.success);
+      }
+    })
   };
   return (
     <>
@@ -33,6 +46,7 @@ const RegisterForm = () => {
           placeholder="Name"
           register={register}
           errors={errors}
+          disabled={isPending}
         />
         <FormField<RegisterSchemaType>
           label="Email"
@@ -40,6 +54,7 @@ const RegisterForm = () => {
           placeholder="Email"
           register={register}
           errors={errors}
+          disabled={isPending}
         />
         <FormField<RegisterSchemaType>
           label="Password"
@@ -48,6 +63,7 @@ const RegisterForm = () => {
           placeholder="Password"
           register={register}
           errors={errors}
+          disabled={isPending}
         />
         <FormField<RegisterSchemaType>
           label="Confirm password"
@@ -56,8 +72,11 @@ const RegisterForm = () => {
           placeholder="Confirm password"
           register={register}
           errors={errors}
+          disabled={isPending}
         />
-        <Button type="submit" label="Register" icon={FiArrowRight} />
+        {error && <div className="text-red-500">{error}</div>}
+        {success && <div className="text-green-500">{success}</div>}
+        <Button type="submit" label={isPending ? "Submitting..." : "Register"} icon={FiArrowRight} disabled={isPending} />
         <div className="flex justify-center my-2">Or</div>
         <SocialAuth />
       </form>

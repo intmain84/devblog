@@ -9,6 +9,7 @@ export const signUp = async (values: RegisterSchemaType) => {
   const validatedFields = RegisterSchema.safeParse(values);
 
   if (!validatedFields.success) {
+    console.log("Invalid fields!");
     return {
       error: "Invalid fields!",
     };
@@ -19,6 +20,7 @@ export const signUp = async (values: RegisterSchemaType) => {
 
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
+    console.log("User already exists!");
     return {
       error: "User already exists!",
     };
@@ -31,4 +33,9 @@ export const signUp = async (values: RegisterSchemaType) => {
       password: hashedPassword,
     },
   });
+
+  console.log("User created successfully!");
+  return {
+    success: "User created successfully!",
+  };
 };
