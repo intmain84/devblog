@@ -10,6 +10,7 @@ import { FiArrowRight } from "react-icons/fi";
 import { RegisterSchema, RegisterSchemaType } from "@/schemas/RegisterSchema";
 import { signUp } from "@/app/actions/auth/register";
 import { useState, useTransition } from "react";
+import Alert from "../common/Alert";
 
 const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -74,8 +75,8 @@ const RegisterForm = () => {
           errors={errors}
           disabled={isPending}
         />
-        {error && <div className="text-red-500">{error}</div>}
-        {success && <div className="text-green-500">{success}</div>}
+        {error && <Alert message={error} />}
+        {success && <Alert success message={success} />}
         <Button type="submit" label={isPending ? "Submitting..." : "Register"} icon={FiArrowRight} disabled={isPending} />
         <div className="flex justify-center my-2">Or</div>
         <SocialAuth />
