@@ -8,8 +8,14 @@ import Button from "../common/Button";
 import { FiArrowRight } from "react-icons/fi";
 import Heading from "../common/Heading";
 import SocialAuth from "./SocialAuth";
+import { useState, useTransition } from "react";
+import Alert from "../common/Alert";
+import { logIn } from "@/app/actions/auth/login";
 
 const LoginForm = () => {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>(undefined);
+
   const {
     register,
     handleSubmit,
@@ -17,7 +23,14 @@ const LoginForm = () => {
   } = useForm<LoginSchemaType>({ resolver: zodResolver(LoginSchema) });
 
   const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
-    console.log("data>>>>:", data);
+    setError(undefined);
+    startTransition(async () => {
+      const result = await logIn(data);
+      if (result?.error) {
+        setError(result.error);
+        return
+      }
+    })
   };
 
   return (
@@ -33,6 +46,7 @@ const LoginForm = () => {
           placeholder="Email"
           register={register}
           errors={errors}
+          disabled={isPending}
         />
         <FormField<LoginSchemaType>
           label="Password"
@@ -40,8 +54,10 @@ const LoginForm = () => {
           placeholder="Password"
           register={register}
           errors={errors}
+          disabled={isPending}
         />
-        <Button type="submit" label="Login" icon={FiArrowRight} />
+        {error && <Alert message={error} />}
+        <Button type="submit" label={isPending ? "Submitting..." : "Login"} icon={FiArrowRight} disabled={isPending} />
         <div className="flex justify-center my-2">Or</div>
         <SocialAuth />
       </form>

@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/layout/Navbar";
 import { ThemeProviderWrapper } from "@/components/layout/ThemeProviderWrapper";
+import { SessionProviderWrapper } from "@/components/layout/SessionProviderWrapper";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -30,11 +31,13 @@ export default function RootLayout({
           poppins.variable
         )}
       >
-        <ThemeProviderWrapper>
-          <Navbar />
-          <main className="flex-grow">{children}</main>
-          <footer>Footer</footer>
-        </ThemeProviderWrapper>
+        <SessionProviderWrapper>
+          <ThemeProviderWrapper>
+            <Navbar />
+            <main className="flex-grow">{children}</main>
+            <footer>Footer</footer>
+          </ThemeProviderWrapper>
+        </SessionProviderWrapper>
       </body>
     </html>
   );

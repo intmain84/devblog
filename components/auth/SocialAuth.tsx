@@ -1,7 +1,13 @@
+"use client";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import Button from "../common/Button";
+import { signIn } from "next-auth/react";
 
 const SocialAuth = () => {
+  const handleLogin = (provider: 'github' | 'google') => {
+    signIn(provider);
+  }
+
   return (
     <div>
       <Button
@@ -10,15 +16,15 @@ const SocialAuth = () => {
         icon={FaGithub}
         className="w-full text-white"
         outlined
-        onClick={() => {}}
+        onClick={() => handleLogin("github")}
       />
       <Button
-        label="Continue with GitHub"
+        label="Continue with Google"
         type="button"
         icon={FaGoogle}
         className="w-full text-white"
         outlined
-        onClick={() => {}}
+        onClick={() => handleLogin("google")}
       />
     </div>
   );
