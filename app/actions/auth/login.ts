@@ -1,6 +1,10 @@
 "use server";
 
 import { signIn } from "@/auth";
+import {
+  generateVerificationToken,
+  sendEmailVerificationToken,
+} from "@/lib/emailVerification";
 import { getUserByEmail } from "@/lib/user";
 import { LOGIN_REDIRECT_URL } from "@/routes";
 import { LoginSchema, LoginSchemaType } from "@/schemas/LoginSchema";
@@ -25,11 +29,23 @@ export const logIn = async (values: LoginSchemaType) => {
     };
   }
 
-  // if (!user.emailVerified) {
-  //   return {
-  //     error: "Email not verified!",
-  //   };
-  // }
+  if (!user.emailVerified) {
+    const emailVerificationToken = await generateVerificationToken(user.email);
+    const { error } = await sendEmailVerificationToken(
+      emailVerificationToken.email,
+      emailVerificationToken.token,
+    );
+
+    if (error) {
+      return {
+        error: "Failed to send email verification token! Try again later.",
+      };
+    }
+
+    return {
+      success: `Check your email for verification! It was sent to ${email}!`,
+    };
+  }
 
   try {
     await signIn("credentials", {

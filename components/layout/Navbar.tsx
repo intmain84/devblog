@@ -1,3 +1,5 @@
+'use client'
+
 import { MdNoteAlt } from "react-icons/md";
 import Container from "./Container";
 import ThemeToggle from "./ThemeToggle";
@@ -7,6 +9,7 @@ import UserButton from "./UserButton";
 import Link from "next/link";
 
 const Navbar = () => {
+
   return (
     <nav className="sticky top-0 z-50 bg-white dark:bg-slate-950">
       <Container>

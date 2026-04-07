@@ -11,10 +11,12 @@ import SocialAuth from "./SocialAuth";
 import { useState, useTransition } from "react";
 import Alert from "../common/Alert";
 import { logIn } from "@/app/actions/auth/login";
+import Link from "next/link";
 
 const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>(undefined);
+  const [success, setSuccess] = useState<string | undefined>(undefined);
 
   const {
     register,
@@ -28,6 +30,10 @@ const LoginForm = () => {
       const result = await logIn(data);
       if (result?.error) {
         setError(result.error);
+        return
+      }
+      if (result?.success) {
+        setSuccess(result.success);
         return
       }
     })
@@ -56,7 +62,9 @@ const LoginForm = () => {
           errors={errors}
           disabled={isPending}
         />
-        {error && <Alert message={error} />}
+        <Link href='/password-email-form'>Forgot password?</Link>
+        {error && <Alert error message={error} />}
+        {success && <Alert success message={success} />}
         <Button type="submit" label={isPending ? "Submitting..." : "Login"} icon={FiArrowRight} disabled={isPending} />
         <div className="flex justify-center my-2">Or</div>
         <SocialAuth />

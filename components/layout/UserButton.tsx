@@ -22,10 +22,11 @@ import { useEffect } from "react";
 const UserButton = () => {
 
   const { data: session, status, update } = useSession();
+  const avatarUrl = session?.user.image || ""
   const isLoggedIn = status === "authenticated";
   const pathname = usePathname();
 
-  console.log("session>>>>:", isLoggedIn, pathname);
+  console.log("Avatar>>>>:", avatarUrl);
 
   useEffect(() => {
     if (!isLoggedIn && pathname) {
@@ -39,7 +40,7 @@ const UserButton = () => {
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger>
           <Avatar>
-            <AvatarImage src="" />
+            <AvatarImage src={avatarUrl} />
             <AvatarFallback className="border-2 border-slate-500 dark:border-slate-50">
               <UserRound />
             </AvatarFallback>

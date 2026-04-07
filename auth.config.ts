@@ -10,10 +10,10 @@ import Google from "next-auth/providers/google";
 export default {
   providers: [
     GitHub({
-      allowDangerousEmailAccountLinking: true,
+      allowDangerousEmailAccountLinking: true, // позволяет связывать аккаунты с одинаковыми email
     }),
     Google({
-      allowDangerousEmailAccountLinking: true,
+      allowDangerousEmailAccountLinking: true, // позволяет связывать аккаунты с одинаковыми email
     }),
     Сredentials({
       async authorize(credentials) {
