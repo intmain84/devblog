@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/layout/Navbar";
 import { ThemeProviderWrapper } from "@/components/layout/ThemeProviderWrapper";
 import { SessionProviderWrapper } from "@/components/layout/SessionProviderWrapper";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -33,9 +34,11 @@ export default function RootLayout({
       >
         <SessionProviderWrapper>
           <ThemeProviderWrapper>
-            <Navbar />
-            <main className="flex-grow">{children}</main>
-            <footer>Footer</footer>
+            <EdgeStoreProvider>
+              <Navbar />
+              <main className="flex-grow">{children}</main>
+              <footer>Footer</footer>
+            </EdgeStoreProvider>
           </ThemeProviderWrapper>
         </SessionProviderWrapper>
       </body>

@@ -30,13 +30,13 @@ const LoginForm = () => {
       const result = await logIn(data);
       if (result?.error) {
         setError(result.error);
-        return
+        return;
       }
       if (result?.success) {
         setSuccess(result.success);
-        return
+        return;
       }
-    })
+    });
   };
 
   return (
@@ -62,10 +62,15 @@ const LoginForm = () => {
           errors={errors}
           disabled={isPending}
         />
-        <Link href='/password-email-form'>Forgot password?</Link>
+        <Link href="/password-email-form">Forgot password?</Link>
         {error && <Alert error message={error} />}
         {success && <Alert success message={success} />}
-        <Button type="submit" label={isPending ? "Submitting..." : "Login"} icon={FiArrowRight} disabled={isPending} />
+        <Button
+          type="submit"
+          label={isPending ? "Submitting..." : "Login"}
+          icon={FiArrowRight}
+          disabled={isPending}
+        />
         <div className="flex justify-center my-2">Or</div>
         <SocialAuth />
       </form>
